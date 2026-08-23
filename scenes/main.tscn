@@ -1,7 +1,7 @@
 [gd_scene format=3 uid="uid://b47kgbnehbhm2"]
 
-[ext_resource type="Script" path="res://scripts/player.gd" id="1_o5qli"]
-[ext_resource type="PackedScene" uid="uid://d303v4ig2cc4y" path="res://scenes/enemy.tscn" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://byyssjvrgesku" path="res://scripts/player.gd" id="1_o5qli"]
+[ext_resource type="Script" uid="uid://dtyoe2x55y61q" path="res://scripts/wave_manager.gd" id="2_0wfyh"]
 
 [node name="Main" type="Node2D" unique_id=1438472570]
 
@@ -20,5 +20,5 @@ offset_right = 16.0
 offset_bottom = 16.0
 color = Color(0, 1, 0, 1)
 
-[node name="Enemy1" parent="." unique_id=1196135540 instance=ExtResource("2_0wfyh")]
-position = Vector2(800, 300)
+[node name="WaveManager" type="Node" parent="." unique_id=1778095462]
+script = ExtResource("2_0wfyh")

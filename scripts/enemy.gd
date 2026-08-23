@@ -1,8 +1,10 @@
 extends CharacterBody2D
 
 @export var speed: float = 150.0
+@export var lifetime: float = 15.0
 
 var player: CharacterBody2D
+var elapsed: float = 0.0
 
 func _ready() -> void:
 	player = get_parent().get_node("Player")
@@ -12,6 +14,14 @@ func _ready() -> void:
 		print("ERROR: Enemy could not find Player node")
 
 func _physics_process(delta: float) -> void:
+	elapsed += delta
+	
+	# Self-destruct after lifetime (for testing/wave progression)
+	if elapsed > lifetime:
+		print("Enemy self-destructed after lifetime")
+		queue_free()
+		return
+	
 	if not player:
 		return
 	
