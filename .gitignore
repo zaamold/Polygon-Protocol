@@ -1,0 +1,27 @@
+# Godot 4+ specific ignores
+.godot/
+*.translation
+*.pot
+
+# Mono-specific ignores
+.mono/
+data_*/
+mono_crash.*.json
+
+# Generated files
+*.translations
+*.po
+*.pot
+
+# Editor generated files
+.vs/
+.vscode/
+*.swp
+*.swo
+*~
+.DS_Store
+Thumbs.db
+
+# User preferences
+project.godot.user
+editor.cfg

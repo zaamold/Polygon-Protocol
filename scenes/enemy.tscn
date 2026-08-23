@@ -1,0 +1,30 @@
+[gd_scene format=3 uid="uid://d303v4ig2cc4y"]
+
+[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_7p1mj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7p1mj"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_md0e3"]
+
+[node name="Enemy" type="CharacterBody2D" unique_id=1196135540]
+script = ExtResource("1_7p1mj")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=814189961]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -12.0
+offset_top = -12.0
+offset_right = 12.0
+offset_bottom = 12.0
+color = Color(1, 0, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=19074580]
+shape = SubResource("CircleShape2D_7p1mj")
+
+[node name="HitBox" type="Area2D" parent="." unique_id=1617835296]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=294835224]
+shape = SubResource("CircleShape2D_md0e3")
