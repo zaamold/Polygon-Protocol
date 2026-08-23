@@ -21,7 +21,8 @@ func _physics_process(delta: float) -> void:
 func _on_area_entered(area: Area2D) -> void:
 	# Check if we hit an enemy
 	var enemy = area.get_parent()
-	if enemy and enemy.name.begins_with("Enemy"):
-		print("Projectile hit enemy: ", enemy.name, " at ", enemy.position)
-		enemy.queue_free()
-		queue_free()
+	if enemy and (enemy.name.begins_with("Enemy") or enemy.name.begins_with("FastEnemy")):
+		if enemy.has_method("die"):
+			print("Projectile hit enemy: ", enemy.name, " at ", enemy.position)
+			enemy.die()
+			queue_free()

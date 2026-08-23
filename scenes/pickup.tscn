@@ -1,0 +1,23 @@
+[gd_scene format=3 uid="uid://p3fpagpfpm85"]
+
+[ext_resource type="Script" uid="uid://b05275w5idvqg" path="res://scripts/pickup.gd" id="1_pg2rt"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_7cqbe"]
+
+[node name="Pickup" type="Area2D" unique_id=1349748759]
+script = ExtResource("1_pg2rt")
+
+[node name="Visual" type="ColorRect" parent="." unique_id=1964894237]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -5.0
+offset_top = -5.0
+offset_right = 5.0
+offset_bottom = 5.0
+color = Color(1, 1, 0, 1)
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1771975343]
+shape = SubResource("CircleShape2D_7cqbe")

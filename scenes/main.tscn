@@ -2,6 +2,9 @@
 
 [ext_resource type="Script" uid="uid://byyssjvrgesku" path="res://scripts/player.gd" id="1_o5qli"]
 [ext_resource type="Script" uid="uid://dtyoe2x55y61q" path="res://scripts/wave_manager.gd" id="2_0wfyh"]
+[ext_resource type="Script" uid="uid://v3b2mxdnfnq5" path="res://scripts/run_manager.gd" id="3_sugp2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_jyhfs"]
 
 [node name="Main" type="Node2D" unique_id=1438472570]
 
@@ -20,5 +23,13 @@ offset_right = 16.0
 offset_bottom = 16.0
 color = Color(0, 1, 0, 1)
 
+[node name="PickupCollector" type="Area2D" parent="Player" unique_id=2000854851]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Player/PickupCollector" unique_id=764846361]
+shape = SubResource("CircleShape2D_jyhfs")
+
 [node name="WaveManager" type="Node" parent="." unique_id=1778095462]
 script = ExtResource("2_0wfyh")
+
+[node name="RunManager" type="Node" parent="." unique_id=1479849133]
+script = ExtResource("3_sugp2")
