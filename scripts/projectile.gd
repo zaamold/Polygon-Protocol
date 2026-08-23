@@ -19,6 +19,7 @@ func _physics_process(delta: float) -> void:
 
 	# Destroy if out of bounds (defensive measure)
 	if position.x < -50 or position.x > arena_width + 50 or position.y < -50 or position.y > arena_height + 50:
+		print("Projectile destroyed (out of bounds)")
 		queue_free()
 		return
 
