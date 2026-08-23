@@ -18,7 +18,7 @@ offset_left = -5.0
 offset_top = -5.0
 offset_right = 5.0
 offset_bottom = 5.0
-color = Color(1, 1, 0, 1)
+color = Color(0, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1771975343]
 shape = SubResource("CircleShape2D_7cqbe")
