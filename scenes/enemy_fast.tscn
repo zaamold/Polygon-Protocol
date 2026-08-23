@@ -3,6 +3,10 @@
 [ext_resource type="Script" uid="uid://rb42cccfgs6h" path="res://scripts/enemy_fast.gd" id="1_na3cw"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_00nrq"]
+radius = 10.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_hitbox"]
+radius = 10.0
 
 [node name="FastEnemy" type="CharacterBody2D" unique_id=987825337]
 script = ExtResource("1_na3cw")
@@ -19,7 +23,10 @@ offset_right = 10.0
 offset_bottom = 10.0
 color = Color(0, 0, 1, 1)
 
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1234567890]
+shape = SubResource("CircleShape2D_00nrq")
+
 [node name="HitBox" type="Area2D" parent="." unique_id=2133336184]
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox" unique_id=585308789]
-shape = SubResource("CircleShape2D_00nrq")
+shape = SubResource("CircleShape2D_hitbox")
