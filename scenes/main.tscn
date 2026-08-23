@@ -4,6 +4,7 @@
 [ext_resource type="Script" uid="uid://dtyoe2x55y61q" path="res://scripts/wave_manager.gd" id="2_0wfyh"]
 [ext_resource type="Script" uid="uid://v3b2mxdnfnq5" path="res://scripts/run_manager.gd" id="3_sugp2"]
 [ext_resource type="Script" uid="uid://cuvgr81ejawg4" path="res://scripts/upgrade_manager.gd" id="4_jyhfs"]
+[ext_resource type="PackedScene" uid="uid://b7jlcq7j8w2s" path="res://scenes/level_up_ui.tscn" id="5_lvlup"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jyhfs"]
 radius = 30.0
@@ -38,3 +39,5 @@ script = ExtResource("3_sugp2")
 
 [node name="UpgradeManager" type="Node" parent="." unique_id=1186691098]
 script = ExtResource("4_jyhfs")
+
+[node name="LevelUpUI" parent="." instance=ExtResource("5_lvlup") unique_id=2000000001]

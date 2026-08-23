@@ -1,0 +1,61 @@
+[gd_scene format=3 uid="uid://b7jlcq7j8w2s"]
+
+[ext_resource type="Script" path="res://scripts/level_up_ui.gd" id="1_abc12"]
+
+[node name="LevelUpUI" type="CanvasLayer" unique_id=1]
+script = ExtResource("1_abc12")
+layer = 100
+
+[node name="Overlay" type="ColorRect" parent="." unique_id=2]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 0.0
+offset_right = 0.0
+offset_bottom = 0.0
+color = Color(0, 0, 0, 0.6)
+
+[node name="Panel" type="PanelContainer" parent="." unique_id=3]
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -150.0
+offset_top = -150.0
+offset_right = 150.0
+offset_bottom = 150.0
+
+[node name="VBoxContainer" type="VBoxContainer" parent="Panel" unique_id=4]
+anchors_preset = 15
+anchor_left = 0.0
+anchor_top = 0.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+
+[node name="Title" type="Label" parent="Panel/VBoxContainer" unique_id=5]
+text = "LEVEL UP!"
+horizontal_alignment = 1
+custom_minimum_size = Vector2(0, 40)
+
+[node name="Spacer" type="Control" parent="Panel/VBoxContainer" unique_id=6]
+custom_minimum_size = Vector2(0, 10)
+
+[node name="Option1" type="Label" parent="Panel/VBoxContainer" unique_id=7]
+text = "[1] Option 1"
+custom_minimum_size = Vector2(0, 30)
+
+[node name="Option2" type="Label" parent="Panel/VBoxContainer" unique_id=8]
+text = "[2] Option 2"
+custom_minimum_size = Vector2(0, 30)
+
+[node name="Option3" type="Label" parent="Panel/VBoxContainer" unique_id=9]
+text = "[3] Option 3"
+custom_minimum_size = Vector2(0, 30)
