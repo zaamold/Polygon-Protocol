@@ -19,6 +19,8 @@ func _physics_process(delta: float) -> void:
 	frame_count += 1
 	if frame_count % 60 == 0:
 		print("Player position: ", position, " | Input: ", input_vector)
+		# Auto-fire for testing collision
+		fire_projectile_in_direction(Vector2.RIGHT)
 
 func _input(event: InputEvent) -> void:
 	if event is InputEventMouseButton and event.pressed and event.button_index == MOUSE_BUTTON_LEFT:

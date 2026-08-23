@@ -41,5 +41,5 @@ func die() -> void:
 func drop_pickup() -> void:
 	var pickup = pickup_scene.instantiate()
 	pickup.global_position = global_position
-	get_parent().add_child(pickup)
+	get_parent().call_deferred("add_child", pickup)
 	print("FastEnemy dropped pickup at ", pickup.global_position)
