@@ -21,6 +21,8 @@ var overlapping_enemies: Array = []
 
 func _ready() -> void:
 	health = max_health
+	# Spawn at center of arena
+	position = Vector2(arena_width / 2.0, arena_height / 2.0)
 
 	# Create enemy collision detector if it doesn't exist
 	if not has_node("EnemyCollider"):
