@@ -2,6 +2,7 @@ extends Node
 
 @export var enemy_scene: PackedScene = preload("res://scenes/enemy.tscn")
 @export var enemy_fast_scene: PackedScene = preload("res://scenes/enemy_fast.tscn")
+@export var enemy_ranged_scene: PackedScene = preload("res://scenes/enemy_ranged.tscn")
 @export var arena_width: float = 1024.0
 @export var arena_height: float = 600.0
 @export var spawn_delay: float = 0.8
@@ -57,10 +58,17 @@ func spawn_enemy() -> void:
 		3:  # left
 			spawn_pos = Vector2(-offset, randf_range(0, arena_height))
 	
-	# Randomly choose enemy type
-	var enemy_type = randi() % 2
-	var scene = enemy_fast_scene if enemy_type == 0 else enemy_scene
-	
+	# Randomly choose enemy type (33% each)
+	var enemy_type = randi() % 3
+	var scene: PackedScene
+	match enemy_type:
+		0:
+			scene = enemy_fast_scene
+		1:
+			scene = enemy_scene
+		2:
+			scene = enemy_ranged_scene
+
 	var enemy = scene.instantiate()
 	enemy.global_position = spawn_pos
 	enemy.player = player
@@ -72,6 +80,6 @@ func spawn_enemy() -> void:
 func get_enemy_count() -> int:
 	var count = 0
 	for child in get_parent().get_children():
-		if child.name.begins_with("Enemy") or child.name.begins_with("FastEnemy"):
+		if child.is_in_group("enemy"):
 			count += 1
 	return count
