@@ -23,6 +23,12 @@ func _process(_delta: float) -> void:
 	# Hide HUD when paused
 	$HBoxContainer.visible = not get_tree().paused
 
+	update_display()
+
+func update_display() -> void:
+	if not player or not run_manager:
+		return
+
 	health_bar.value = player.health
 	health_bar.tooltip_text = "Health: %.0f/%.0f" % [player.health, player.max_health]
 

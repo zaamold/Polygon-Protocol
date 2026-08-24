@@ -46,6 +46,10 @@ func check_levelup(current_xp: int, current_level: int) -> bool:
 	return false
 
 func _show_upgrade_choice() -> void:
+	var hud = get_parent().get_node("HUD")
+	if hud:
+		hud.update_display()
+
 	get_tree().paused = true
 
 	# Randomly select 3 upgrades

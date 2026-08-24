@@ -13,6 +13,10 @@ func _ready() -> void:
 	process_mode = PROCESS_MODE_ALWAYS
 
 func show_game_over() -> void:
+	var hud = get_parent().get_node("HUD")
+	if hud:
+		hud.update_display()
+
 	get_tree().paused = true
 	panel.visible = true
 
