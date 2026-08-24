@@ -13,6 +13,7 @@ var level_up_ui: CanvasLayer
 var options_panel: PanelContainer
 var menu_buttons: Array[Button] = []
 var current_focus_index := 0
+var was_level_up_active_before_pause := false
 
 func _ready() -> void:
 	var main = get_parent()
@@ -78,11 +79,19 @@ func _setup_ui() -> void:
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
 		if level_up_ui.is_visible:
-			return
-		print("Pause input detected - current state: is_paused=%s" % is_paused)
-		toggle_pause()
+			# Pause pressed while level-up is active: hide level-up, show pause menu
+			# Don't toggle paused state—it's already true from level-up
+			was_level_up_active_before_pause = true
+			level_up_ui.hide_ui()
+			is_paused = true
+			overlay.visible = true
+			_update_stats_display()
+			print("Pause menu opened (level-up was hidden)")
+		else:
+			print("Pause input detected - current state: is_paused=%s" % is_paused)
+			toggle_pause()
 
-	if not is_paused or level_up_ui.is_visible:
+	if not is_paused:
 		return
 
 	# Menu navigation with ui_up/ui_down
@@ -140,7 +149,15 @@ func _update_stats_display() -> void:
 	print("Pause Menu Stats - Level: ", run_manager.level if run_manager else "N/A", " | Fire Rate: ", player.fire_rate if player else "N/A", " | Speed: ", player.speed if player else "N/A")
 
 func _on_resume_pressed() -> void:
-	toggle_pause()
+	if was_level_up_active_before_pause:
+		was_level_up_active_before_pause = false
+		# Restore level-up UI with the same options that were being presented
+		level_up_ui.show_upgrade_options(level_up_ui.current_options)
+		is_paused = false
+		overlay.visible = false
+		print("Resumed to level-up UI")
+	else:
+		toggle_pause()
 
 func _on_options_pressed() -> void:
 	is_in_options = true
