@@ -32,6 +32,16 @@ func _create_health_bar() -> void:
 	health_bar.value = health
 	health_bar.custom_minimum_size = Vector2(30, 4)
 	health_bar.modulate = Color.RED
+	health_bar.show_percentage = false
+
+	var style_box = StyleBoxFlat.new()
+	style_box.bg_color = Color.RED
+	health_bar.add_theme_stylebox_override("fill", style_box)
+
+	var empty_style = StyleBoxFlat.new()
+	empty_style.bg_color = Color(0.2, 0.2, 0.2, 1.0)
+	health_bar.add_theme_stylebox_override("background", empty_style)
+
 	add_child(health_bar)
 	health_bar.position = Vector2(-15, -30)
 
@@ -88,10 +98,10 @@ func take_damage(damage: float) -> void:
 	if health_bar:
 		health_bar.value = health
 		# Flash effect - set to white briefly
-		var tween = create_tween()
 		health_bar.modulate = Color.WHITE
-		await tween.tween_timer(0.1)
-		health_bar.modulate = Color.RED
+		await get_tree().create_timer(0.1).timeout
+		if is_instance_valid(self):
+			health_bar.modulate = Color.RED
 
 	if health <= 0:
 		die()

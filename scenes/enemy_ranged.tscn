@@ -1,8 +1,11 @@
-[gd_scene load_steps=3 format=3 uid="uid://cgbv3m9h51cv"]
+[gd_scene format=3 uid="uid://cgbv3nah51cv"]
 
 [ext_resource type="Script" path="res://scripts/enemy_ranged.gd" id="1_er"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_1"]
+radius = 15.0
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_2"]
 radius = 15.0
 
 [node name="RangedEnemy" type="CharacterBody2D"]
@@ -22,3 +25,8 @@ color = Color(0, 1, 1, 1)
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
 shape = SubResource("CircleShape2D_1")
+
+[node name="HitBox" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="HitBox"]
+shape = SubResource("CircleShape2D_2")
