@@ -1,6 +1,6 @@
 [gd_scene format=3 uid="uid://d303v4ig2cc4y"]
 
-[ext_resource type="Script" path="res://scripts/enemy.gd" id="1_7p1mj"]
+[ext_resource type="Script" uid="uid://0ha4u4qybu5l" path="res://scripts/enemy.gd" id="1_7p1mj"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_7p1mj"]
 radius = 12.0
@@ -10,6 +10,7 @@ radius = 12.0
 
 [node name="Enemy" type="CharacterBody2D" unique_id=1196135540]
 script = ExtResource("1_7p1mj")
+max_health = 30.0
 
 [node name="Visual" type="ColorRect" parent="." unique_id=814189961]
 anchors_preset = 8
