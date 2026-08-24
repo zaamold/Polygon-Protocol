@@ -6,8 +6,10 @@ extends CanvasLayer
 @onready var stats_section = $PanelContainer/MarginContainer/VBoxContainer/StatsSection
 
 var is_paused := false
+var is_in_options := false
 var player: Node
 var run_manager: Node
+var options_panel: PanelContainer
 
 func _ready() -> void:
 	var main = get_parent()
@@ -95,7 +97,46 @@ func _on_resume_pressed() -> void:
 	toggle_pause()
 
 func _on_options_pressed() -> void:
-	print("Options menu (placeholder)")
+	is_in_options = true
+	_show_options_panel()
+
+func _show_options_panel() -> void:
+	actions_section.visible = false
+	stats_section.visible = false
+
+	if not options_panel:
+		options_panel = PanelContainer.new()
+		var margin = MarginContainer.new()
+		margin.add_theme_constant_override("margin_left", 20)
+		margin.add_theme_constant_override("margin_right", 20)
+		margin.add_theme_constant_override("margin_top", 20)
+		margin.add_theme_constant_override("margin_bottom", 20)
+
+		var vbox_options = VBoxContainer.new()
+		var title = Label.new()
+		title.text = "Options (Placeholder)"
+		vbox_options.add_child(title)
+
+		vbox_options.add_child(Label.new())  # Spacer
+
+		var back_btn = Button.new()
+		back_btn.text = "Back"
+		back_btn.pressed.connect(_on_back_from_options_pressed)
+		vbox_options.add_child(back_btn)
+
+		margin.add_child(vbox_options)
+		options_panel.add_child(margin)
+		vbox.add_child(options_panel)
+
+	options_panel.visible = true
+	print("Options menu opened (paused=%s)" % get_tree().paused)
+
+func _on_back_from_options_pressed() -> void:
+	is_in_options = false
+	options_panel.visible = false
+	actions_section.visible = true
+	stats_section.visible = true
+	print("Returned to pause menu (paused=%s)" % get_tree().paused)
 
 func _on_quit_pressed() -> void:
 	get_tree().quit()
