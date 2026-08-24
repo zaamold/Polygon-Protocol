@@ -1,9 +1,9 @@
 extends CharacterBody2D
 
-@export var speed: float = 200.0  # Slower than player (300), faster than regular enemy (150)
+@export var speed: float = 140.0  # Slower than player (300), slower than regular enemy (150)
 @export var lifetime: float = 15.0
 @export var damage_interval: float = 1.0
-@export var preferred_distance: float = 300.0
+@export var preferred_distance: float = 200.0
 @export var fire_interval: float = 2.0
 @export var max_health: float = 20.0
 
