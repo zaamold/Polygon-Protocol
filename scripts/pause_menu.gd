@@ -15,6 +15,7 @@ func _ready() -> void:
 	run_manager = main.get_node("RunManager")
 
 	overlay.visible = false
+	process_mode = PROCESS_MODE_ALWAYS
 
 	_setup_ui()
 
@@ -59,10 +60,10 @@ func _setup_ui() -> void:
 
 	stats_section.add_child(stats_vbox)
 
-func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
+func _process(_delta: float) -> void:
+	if Input.is_action_just_pressed("pause"):
+		print("Pause input detected - current state: is_paused=%s" % is_paused)
 		toggle_pause()
-		get_tree().root.set_input_as_handled()
 
 func toggle_pause() -> void:
 	is_paused = !is_paused
