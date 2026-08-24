@@ -20,8 +20,9 @@ func show_game_over() -> void:
 	get_tree().paused = true
 	panel.visible = true
 
-	var time_minutes = int(run_manager.time_survived) / 60
-	var time_seconds = int(run_manager.time_survived) % 60
+	var time_seconds_int = int(run_manager.time_survived)
+	var time_minutes = time_seconds_int / 60
+	var time_seconds = time_seconds_int % 60
 
 	var title = Label.new()
 	title.text = "GAME OVER"

@@ -78,7 +78,7 @@ func _setup_ui() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
-		if level_up_ui.is_visible:
+		if level_up_ui.is_level_up_active:
 			# Pause pressed while level-up is active: hide level-up, show pause menu
 			# Don't toggle paused state—it's already true from level-up
 			was_level_up_active_before_pause = true
@@ -184,6 +184,7 @@ func _show_options_panel() -> void:
 
 		var back_btn = Button.new()
 		back_btn.text = "Back"
+		back_btn.name = "BackButton"  # Named reference to avoid index lookups
 		back_btn.pressed.connect(_on_back_from_options_pressed)
 		back_btn.focus_mode = Control.FOCUS_ALL
 		vbox_options.add_child(back_btn)
@@ -193,7 +194,7 @@ func _show_options_panel() -> void:
 		vbox.add_child(options_panel)
 
 	options_panel.visible = true
-	var back_btn = options_panel.get_child(0).get_child(2)  # MarginContainer -> VBoxContainer -> Back button
+	var back_btn = options_panel.get_child(0).get_child(0).get_child(2)  # PanelContainer -> MarginContainer -> VBoxContainer -> Back button
 	if back_btn:
 		menu_buttons.clear()
 		menu_buttons.append(back_btn)

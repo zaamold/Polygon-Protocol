@@ -8,7 +8,7 @@ extends CanvasLayer
 var upgrade_manager: Node
 var current_options: Array = []
 var selected_index: int = 0
-var is_visible: bool = false
+var is_level_up_active: bool = false
 
 func _ready() -> void:
 	hide_ui()
@@ -18,7 +18,7 @@ func _ready() -> void:
 func show_upgrade_options(options: Array) -> void:
 	current_options = options
 	selected_index = 0
-	is_visible = true
+	is_level_up_active = true
 
 	if options.size() >= 1:
 		option1_label.text = "[1] " + options[0].name + " - " + options[0].description
@@ -34,12 +34,12 @@ func show_upgrade_options(options: Array) -> void:
 func hide_ui() -> void:
 	$Panel.hide()
 	overlay.hide()
-	is_visible = false
+	is_level_up_active = false
 	current_options.clear()
 	selected_index = 0
 
 func _input(event: InputEvent) -> void:
-	if not is_visible:
+	if not is_level_up_active:
 		return
 
 	# Keyboard input: 1, 2, 3 keys
@@ -56,7 +56,7 @@ func _input(event: InputEvent) -> void:
 				get_tree().root.set_input_as_handled()
 
 func _process(_delta: float) -> void:
-	if not is_visible:
+	if not is_level_up_active or current_options.size() == 0:
 		return
 
 	# Controller input: D-Pad up/down for navigation
