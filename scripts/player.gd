@@ -77,6 +77,8 @@ func _physics_process(delta: float) -> void:
 	if frame_count % 60 == 0:
 		var aim = get_aim_direction()
 		print("Player position: ", position, " | Input: ", input_vector, " | Aim: ", aim, " (length: ", aim.length(), ") | Fire rate: ", fire_rate, " shots/sec")
+		# Auto-fire for testing
+		fire_projectile_in_direction(aim)
 
 func get_aim_direction() -> Vector2:
 	var stick_dir = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")

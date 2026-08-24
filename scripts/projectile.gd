@@ -38,14 +38,14 @@ func _on_area_entered(area: Area2D) -> void:
 	if has_hit:
 		return
 
-	# Check if we hit an enemy by verifying parent has die() method
+	# Check if we hit an enemy (check for enemy group)
 	var enemy = area.get_parent()
-	if not enemy or not enemy.has_method("die"):
+	if not enemy or not enemy.is_in_group("enemy"):
 		return
 
-	# Hit confirmed - kill the enemy and destroy the projectile
+	# Hit confirmed - damage the enemy and destroy the projectile
 	has_hit = true
 	_queued_for_deletion = true
 	print("Projectile hit enemy: ", enemy.name, " at ", enemy.position)
-	enemy.die()
+	enemy.take_damage(10.0)
 	queue_free()

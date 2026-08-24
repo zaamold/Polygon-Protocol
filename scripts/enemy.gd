@@ -3,19 +3,33 @@ extends CharacterBody2D
 @export var speed: float = 150.0
 @export var lifetime: float = 15.0
 @export var damage_interval: float = 1.0
+@export var max_health: float = 20.0
 
 var player: CharacterBody2D
 var elapsed: float = 0.0
 var damage_cooldown: float = 0.0
+var health: float
 var pickup_scene: PackedScene = preload("res://scenes/pickup.tscn")
+var health_bar: ProgressBar
 
 func _ready() -> void:
 	add_to_group("enemy")
+	health = max_health
+	_create_health_bar()
 	player = get_parent().get_node("Player")
 	if player:
 		print("Enemy spawned at ", position, " targeting player at ", player.position)
 	else:
 		print("ERROR: Enemy could not find Player node")
+
+func _create_health_bar() -> void:
+	health_bar = ProgressBar.new()
+	health_bar.max_value = max_health
+	health_bar.value = health
+	health_bar.custom_minimum_size = Vector2(30, 4)
+	health_bar.modulate = Color.RED
+	add_child(health_bar)
+	health_bar.position = Vector2(-15, -30)
 
 func _physics_process(delta: float) -> void:
 	elapsed += delta
@@ -36,6 +50,19 @@ func _physics_process(delta: float) -> void:
 	# Clamp to arena bounds
 	position.x = clamp(position.x, 0, 1024)
 	position.y = clamp(position.y, 0, 600)
+
+func take_damage(damage: float) -> void:
+	health -= damage
+	if health_bar:
+		health_bar.value = health
+		# Flash effect - set to white briefly
+		var tween = create_tween()
+		health_bar.modulate = Color.WHITE
+		await tween.tween_timer(0.1)
+		health_bar.modulate = Color.RED
+
+	if health <= 0:
+		die()
 
 func die() -> void:
 	print("Enemy died at ", position)
