@@ -11,7 +11,13 @@ var _queued_for_deletion: bool = false
 
 func _ready() -> void:
 	area_entered.connect(_on_area_entered)
+	_update_rotation()
 	print("Enemy projectile spawned at ", position, " direction: ", direction)
+
+func _update_rotation() -> void:
+	var visual = $Visual
+	if visual:
+		rotation = direction.angle()
 
 func _physics_process(delta: float) -> void:
 	if _queued_for_deletion:
