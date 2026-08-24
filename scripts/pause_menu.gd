@@ -43,9 +43,9 @@ func _setup_ui() -> void:
 	quit_btn.focus_mode = Control.FOCUS_ALL
 	actions_vbox.add_child(quit_btn)
 
-	resume_btn.grab_focus()
-
 	actions_section.add_child(actions_vbox)
+
+	resume_btn.grab_focus.call_deferred()
 
 	var stats_vbox = VBoxContainer.new()
 	stats_vbox.add_theme_constant_override("separation", 5)
@@ -137,7 +137,7 @@ func _show_options_panel() -> void:
 	options_panel.visible = true
 	var back_btn = options_panel.get_child(0).get_child(2)  # MarginContainer -> VBoxContainer -> Back button
 	if back_btn:
-		back_btn.grab_focus()
+		back_btn.grab_focus.call_deferred()
 	print("Options menu opened (paused=%s)" % get_tree().paused)
 
 func _on_back_from_options_pressed() -> void:
@@ -147,7 +147,7 @@ func _on_back_from_options_pressed() -> void:
 	stats_section.visible = true
 	var options_btn = actions_section.get_child(0).get_child(1)  # VBoxContainer -> Options button
 	if options_btn:
-		options_btn.grab_focus()
+		options_btn.grab_focus.call_deferred()
 	print("Returned to pause menu (paused=%s)" % get_tree().paused)
 
 func _on_quit_pressed() -> void:
