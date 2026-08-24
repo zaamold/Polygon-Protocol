@@ -4,6 +4,8 @@ extends CharacterBody2D
 @export var arena_width: float = 1024.0
 @export var arena_height: float = 600.0
 @export var max_health: float = 100.0
+@export var damage_per_hit: float = 10.0
+@export var invincibility_duration: float = 0.5
 
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var frame_count := 0
@@ -13,9 +15,25 @@ var fire_rate := 5.0
 var shots_fired := 0
 var health: float
 var pickup_count: int = 0
+var invincibility_timer := 0.0
+var is_invincible := false
 
 func _ready() -> void:
 	health = max_health
+
+	# Create enemy collision detector if it doesn't exist
+	if not has_node("EnemyCollider"):
+		var enemy_collider = Area2D.new()
+		enemy_collider.name = "EnemyCollider"
+		add_child(enemy_collider)
+
+		var collision_shape = CollisionShape2D.new()
+		var circle_shape = CircleShape2D.new()
+		circle_shape.radius = 20.0
+		collision_shape.shape = circle_shape
+		enemy_collider.add_child(collision_shape)
+
+		enemy_collider.area_entered.connect(_on_enemy_area_entered)
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -28,6 +46,17 @@ func _physics_process(delta: float) -> void:
 
 	# Update fire cooldown
 	fire_cooldown = max(0.0, fire_cooldown - delta)
+
+	# Update invincibility frames
+	if is_invincible:
+		invincibility_timer -= delta
+		if invincibility_timer <= 0:
+			is_invincible = false
+			$Visual.modulate.a = 1.0
+		else:
+			# Flicker effect during invincibility
+			var flicker = fmod(invincibility_timer * 10, 1.0) > 0.5
+			$Visual.modulate.a = 0.5 if flicker else 1.0
 
 	# Hold-to-fire: check if fire button is held and cooldown is ready
 	if Input.is_action_pressed("fire_weapon") and fire_cooldown <= 0.0:
@@ -56,5 +85,28 @@ func fire_projectile_in_direction(direction: Vector2) -> void:
 	projectile.global_position = global_position
 	projectile.direction = direction
 	get_parent().add_child(projectile)
-	
+
 	print("Fired projectile in direction: ", direction)
+
+func _on_enemy_area_entered(area: Area2D) -> void:
+	# Check if the area is from an enemy (parent is enemy, or parent's parent, etc.)
+	var parent = area.get_parent()
+	while parent:
+		if parent.is_in_group("enemy") or parent.script == load("res://scripts/enemy.gd") or parent.script == load("res://scripts/enemy_fast.gd"):
+			take_damage(damage_per_hit)
+			return
+		parent = parent.get_parent()
+
+func take_damage(damage: float) -> void:
+	if is_invincible:
+		return
+
+	health -= damage
+	health = max(0.0, health)
+	is_invincible = true
+	invincibility_timer = invincibility_duration
+
+	print("Player hit! Health: %.1f/%.1f (invincible for %.2fs)" % [health, max_health, invincibility_duration])
+
+	if health <= 0:
+		print("PLAYER DIED")

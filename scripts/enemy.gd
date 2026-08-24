@@ -8,6 +8,7 @@ var elapsed: float = 0.0
 var pickup_scene: PackedScene = preload("res://scenes/pickup.tscn")
 
 func _ready() -> void:
+	add_to_group("enemy")
 	player = get_parent().get_node("Player")
 	if player:
 		print("Enemy spawned at ", position, " targeting player at ", player.position)
