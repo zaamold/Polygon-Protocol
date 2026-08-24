@@ -9,6 +9,7 @@ var is_paused := false
 var is_in_options := false
 var player: Node
 var run_manager: Node
+var level_up_ui: CanvasLayer
 var options_panel: PanelContainer
 var menu_buttons: Array[Button] = []
 var current_focus_index := 0
@@ -17,6 +18,7 @@ func _ready() -> void:
 	var main = get_parent()
 	player = main.get_node("Player")
 	run_manager = main.get_node("RunManager")
+	level_up_ui = main.get_node("LevelUpUI")
 
 	overlay.visible = false
 	process_mode = PROCESS_MODE_ALWAYS
@@ -75,10 +77,12 @@ func _setup_ui() -> void:
 
 func _process(_delta: float) -> void:
 	if Input.is_action_just_pressed("pause"):
+		if level_up_ui.is_visible:
+			return
 		print("Pause input detected - current state: is_paused=%s" % is_paused)
 		toggle_pause()
 
-	if not is_paused:
+	if not is_paused or level_up_ui.is_visible:
 		return
 
 	# Menu navigation with ui_up/ui_down
