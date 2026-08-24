@@ -6,6 +6,7 @@ extends CharacterBody2D
 @export var max_health: float = 100.0
 @export var damage_per_hit: float = 10.0
 @export var invincibility_duration: float = 0.5
+@export var debug_mode: bool = false;
 
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var frame_count := 0
@@ -76,7 +77,7 @@ func _physics_process(delta: float) -> void:
 		shots_fired += 1
 
 	frame_count += 1
-	if frame_count % 60 == 0:
+	if debug_mode && frame_count % 60 == 0:
 		var aim = get_aim_direction()
 		print("Player position: ", position, " | Input: ", input_vector, " | Aim: ", aim, " (length: ", aim.length(), ") | Fire rate: ", fire_rate, " shots/sec")
 		# Auto-fire for testing

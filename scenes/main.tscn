@@ -18,8 +18,8 @@ radius = 30.0
 script = ExtResource("1_o5qli")
 
 [node name="Visual" type="Polygon2D" parent="Player" unique_id=1883493467]
-polygon = PackedVector2Array(0, -16, 11.31, -11.31, 16, 0, 11.31, 11.31, 0, 16, -11.31, 11.31, -16, 0, -11.31, -11.31)
 color = Color(0, 1, 0, 1)
+polygon = PackedVector2Array(0, -16, 11.31, -11.31, 16, 0, 11.31, 11.31, 0, 16, -11.31, 11.31, -16, 0, -11.31, -11.31)
 
 [node name="PickupCollector" type="Area2D" parent="Player" unique_id=2000854851]
 
