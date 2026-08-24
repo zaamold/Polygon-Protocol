@@ -28,17 +28,22 @@ func _setup_ui() -> void:
 	var resume_btn = Button.new()
 	resume_btn.text = "Resume"
 	resume_btn.pressed.connect(_on_resume_pressed)
+	resume_btn.focus_mode = Control.FOCUS_ALL
 	actions_vbox.add_child(resume_btn)
 
 	var options_btn = Button.new()
 	options_btn.text = "Options"
 	options_btn.pressed.connect(_on_options_pressed)
+	options_btn.focus_mode = Control.FOCUS_ALL
 	actions_vbox.add_child(options_btn)
 
 	var quit_btn = Button.new()
 	quit_btn.text = "Quit"
 	quit_btn.pressed.connect(_on_quit_pressed)
+	quit_btn.focus_mode = Control.FOCUS_ALL
 	actions_vbox.add_child(quit_btn)
+
+	resume_btn.grab_focus()
 
 	actions_section.add_child(actions_vbox)
 
@@ -122,6 +127,7 @@ func _show_options_panel() -> void:
 		var back_btn = Button.new()
 		back_btn.text = "Back"
 		back_btn.pressed.connect(_on_back_from_options_pressed)
+		back_btn.focus_mode = Control.FOCUS_ALL
 		vbox_options.add_child(back_btn)
 
 		margin.add_child(vbox_options)
@@ -129,6 +135,9 @@ func _show_options_panel() -> void:
 		vbox.add_child(options_panel)
 
 	options_panel.visible = true
+	var back_btn = options_panel.get_child(0).get_child(2)  # MarginContainer -> VBoxContainer -> Back button
+	if back_btn:
+		back_btn.grab_focus()
 	print("Options menu opened (paused=%s)" % get_tree().paused)
 
 func _on_back_from_options_pressed() -> void:
@@ -136,6 +145,9 @@ func _on_back_from_options_pressed() -> void:
 	options_panel.visible = false
 	actions_section.visible = true
 	stats_section.visible = true
+	var options_btn = actions_section.get_child(0).get_child(1)  # VBoxContainer -> Options button
+	if options_btn:
+		options_btn.grab_focus()
 	print("Returned to pause menu (paused=%s)" % get_tree().paused)
 
 func _on_quit_pressed() -> void:
