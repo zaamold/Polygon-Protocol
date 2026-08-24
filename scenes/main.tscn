@@ -6,7 +6,7 @@
 [ext_resource type="Script" uid="uid://cuvgr81ejawg4" path="res://scripts/upgrade_manager.gd" id="4_jyhfs"]
 [ext_resource type="PackedScene" uid="uid://b7jlcq7j8w2s" path="res://scenes/level_up_ui.tscn" id="5_lvlup"]
 [ext_resource type="PackedScene" uid="uid://cth2wdcgq82v" path="res://scenes/pause_menu.tscn" id="6_pmenu"]
-[ext_resource type="PackedScene" uid="uid://cnqp6lyx1w9s" path="res://scenes/hud.tscn" id="7_hud"]
+[ext_resource type="PackedScene" uid="uid://cnqp6lyx1xas" path="res://scenes/hud.tscn" id="7_hud"]
 [ext_resource type="PackedScene" uid="uid://dpt6c63n6gkj" path="res://scenes/game_over.tscn" id="8_go"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jyhfs"]
@@ -43,10 +43,10 @@ script = ExtResource("3_sugp2")
 [node name="UpgradeManager" type="Node" parent="." unique_id=1186691098]
 script = ExtResource("4_jyhfs")
 
-[node name="LevelUpUI" parent="." instance=ExtResource("5_lvlup") unique_id=2000000001]
+[node name="LevelUpUI" parent="." unique_id=2000000001 instance=ExtResource("5_lvlup")]
 
-[node name="PauseMenu" parent="." instance=ExtResource("6_pmenu") unique_id=2000000002]
+[node name="PauseMenu" parent="." unique_id=2000000002 instance=ExtResource("6_pmenu")]
 
-[node name="HUD" parent="." instance=ExtResource("7_hud") unique_id=2000000003]
+[node name="HUD" parent="." unique_id=2000000003 instance=ExtResource("7_hud")]
 
-[node name="GameOver" parent="." instance=ExtResource("8_go") unique_id=2000000004]
+[node name="GameOver" parent="." unique_id=2000000004 instance=ExtResource("8_go")]
