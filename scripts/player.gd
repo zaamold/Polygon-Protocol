@@ -3,6 +3,7 @@ extends CharacterBody2D
 @export var speed: float = 300.0
 @export var arena_width: float = 1024.0
 @export var arena_height: float = 600.0
+@export var max_health: float = 100.0
 
 var projectile_scene = preload("res://scenes/projectile.tscn")
 var frame_count := 0
@@ -10,6 +11,11 @@ var frame_count := 0
 var fire_cooldown := 0.0
 var fire_rate := 5.0
 var shots_fired := 0
+var health: float
+var pickup_count: int = 0
+
+func _ready() -> void:
+	health = max_health
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
