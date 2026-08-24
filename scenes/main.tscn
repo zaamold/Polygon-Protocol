@@ -7,6 +7,7 @@
 [ext_resource type="PackedScene" uid="uid://b7jlcq7j8w2s" path="res://scenes/level_up_ui.tscn" id="5_lvlup"]
 [ext_resource type="PackedScene" uid="uid://cth2wdcgq82v" path="res://scenes/pause_menu.tscn" id="6_pmenu"]
 [ext_resource type="PackedScene" uid="uid://cnqp6lyx1w9s" path="res://scenes/hud.tscn" id="7_hud"]
+[ext_resource type="PackedScene" uid="uid://dpt6c63n6gkj" path="res://scenes/game_over.tscn" id="8_go"]
 
 [sub_resource type="CircleShape2D" id="CircleShape2D_jyhfs"]
 radius = 30.0
@@ -47,3 +48,5 @@ script = ExtResource("4_jyhfs")
 [node name="PauseMenu" parent="." instance=ExtResource("6_pmenu") unique_id=2000000002]
 
 [node name="HUD" parent="." instance=ExtResource("7_hud") unique_id=2000000003]
+
+[node name="GameOver" parent="." instance=ExtResource("8_go") unique_id=2000000004]

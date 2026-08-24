@@ -2,11 +2,16 @@ extends Node
 
 var xp: int = 0
 var level: int = 1
+var enemies_killed: int = 0
+var time_survived: float = 0.0
 var upgrade_manager: Node
 
 func _ready() -> void:
 	upgrade_manager = get_parent().get_node("UpgradeManager")
 	print("Run started - XP: 0, Level: 1")
+
+func _process(delta: float) -> void:
+	time_survived += delta
 
 func add_xp(amount: int) -> void:
 	xp += amount
@@ -21,3 +26,6 @@ func _check_levelup() -> void:
 		print("LEVEL UP! Now level ", level)
 		if upgrade_manager:
 			upgrade_manager._show_upgrade_choice()
+
+func record_kill() -> void:
+	enemies_killed += 1

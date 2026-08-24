@@ -17,6 +17,7 @@ var health: float
 var pickup_count: int = 0
 var invincibility_timer := 0.0
 var is_invincible := false
+var overlapping_enemies: Array = []
 
 func _ready() -> void:
 	health = max_health
@@ -34,6 +35,7 @@ func _ready() -> void:
 		enemy_collider.add_child(collision_shape)
 
 		enemy_collider.area_entered.connect(_on_enemy_area_entered)
+		enemy_collider.area_exited.connect(_on_enemy_area_exited)
 
 func _physics_process(delta: float) -> void:
 	var input_vector := Input.get_vector("ui_left", "ui_right", "ui_up", "ui_down")
@@ -57,6 +59,12 @@ func _physics_process(delta: float) -> void:
 			# Flicker effect during invincibility
 			var flicker = fmod(invincibility_timer * 10, 1.0) > 0.5
 			$Visual.modulate.a = 0.5 if flicker else 1.0
+
+	# Check for continuous damage from overlapping enemies
+	for enemy in overlapping_enemies:
+		if is_instance_valid(enemy) and enemy.damage_cooldown <= 0.0:
+			take_damage(damage_per_hit)
+			enemy.damage_cooldown = enemy.damage_interval
 
 	# Hold-to-fire: check if fire button is held and cooldown is ready
 	if Input.is_action_pressed("fire_weapon") and fire_cooldown <= 0.0:
@@ -89,11 +97,21 @@ func fire_projectile_in_direction(direction: Vector2) -> void:
 	print("Fired projectile in direction: ", direction)
 
 func _on_enemy_area_entered(area: Area2D) -> void:
-	# Check if the area is from an enemy (parent is enemy, or parent's parent, etc.)
+	# Check if the area is from an enemy
 	var parent = area.get_parent()
 	while parent:
-		if parent.is_in_group("enemy") or parent.script == load("res://scripts/enemy.gd") or parent.script == load("res://scripts/enemy_fast.gd"):
-			take_damage(damage_per_hit)
+		if parent.is_in_group("enemy"):
+			if not overlapping_enemies.has(parent):
+				overlapping_enemies.append(parent)
+			return
+		parent = parent.get_parent()
+
+func _on_enemy_area_exited(area: Area2D) -> void:
+	# Remove enemy from overlapping list
+	var parent = area.get_parent()
+	while parent:
+		if parent.is_in_group("enemy"):
+			overlapping_enemies.erase(parent)
 			return
 		parent = parent.get_parent()
 
@@ -110,3 +128,6 @@ func take_damage(damage: float) -> void:
 
 	if health <= 0:
 		print("PLAYER DIED")
+		var game_over = get_parent().get_node("GameOver")
+		if game_over:
+			game_over.show_game_over()

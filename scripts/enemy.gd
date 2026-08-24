@@ -2,9 +2,11 @@ extends CharacterBody2D
 
 @export var speed: float = 150.0
 @export var lifetime: float = 15.0
+@export var damage_interval: float = 1.0
 
 var player: CharacterBody2D
 var elapsed: float = 0.0
+var damage_cooldown: float = 0.0
 var pickup_scene: PackedScene = preload("res://scenes/pickup.tscn")
 
 func _ready() -> void:
@@ -17,25 +19,29 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	elapsed += delta
-	
+	damage_cooldown = max(0.0, damage_cooldown - delta)
+
 	# Self-destruct after lifetime (for testing/wave progression)
 	if elapsed > lifetime:
 		die()
 		return
-	
+
 	if not player:
 		return
-	
+
 	var direction = (player.global_position - global_position).normalized()
 	velocity = direction * speed
 	position += velocity * delta
-	
+
 	# Clamp to arena bounds
 	position.x = clamp(position.x, 0, 1024)
 	position.y = clamp(position.y, 0, 600)
 
 func die() -> void:
 	print("Enemy died at ", position)
+	var run_manager = get_parent().get_node("RunManager")
+	if run_manager:
+		run_manager.record_kill()
 	drop_pickup()
 	queue_free()
 
