@@ -168,6 +168,7 @@ func _show_options_panel() -> void:
 	stats_section.visible = false
 
 	if not options_panel:
+		print("[PauseMenu] Creating options panel...")
 		options_panel = PanelContainer.new()
 		var margin = MarginContainer.new()
 		margin.add_theme_constant_override("margin_left", 20)
@@ -198,6 +199,7 @@ func _show_options_panel() -> void:
 		windowed_btn.pressed.connect(_on_windowed_pressed)
 		windowed_btn.focus_mode = Control.FOCUS_ALL
 		display_mode_hbox.add_child(windowed_btn)
+		print("[PauseMenu] Created Windowed button")
 
 		var fullscreen_btn = Button.new()
 		fullscreen_btn.text = "Borderless FS"
@@ -205,6 +207,7 @@ func _show_options_panel() -> void:
 		fullscreen_btn.pressed.connect(_on_fullscreen_pressed)
 		fullscreen_btn.focus_mode = Control.FOCUS_ALL
 		display_mode_hbox.add_child(fullscreen_btn)
+		print("[PauseMenu] Created Fullscreen button")
 
 		vbox_options.add_child(display_mode_hbox)
 
@@ -226,6 +229,7 @@ func _show_options_panel() -> void:
 			res_btn.pressed.connect(func(): _on_resolution_pressed(res))
 			res_btn.focus_mode = Control.FOCUS_ALL
 			resolution_hbox.add_child(res_btn)
+		print("[PauseMenu] Created %d resolution buttons" % DisplaySettings.get_resolution_presets().size())
 
 		vbox_options.add_child(resolution_hbox)
 
@@ -265,25 +269,27 @@ func _populate_options_buttons() -> void:
 		menu_buttons[0].grab_focus.call_deferred()
 
 func _on_windowed_pressed() -> void:
-	print("[PauseMenu] _on_windowed_pressed called")
-	print("[PauseMenu] Current mode before: ", DisplaySettings.current_mode)
+	print("\n>>> [PauseMenu.BUTTON] WINDOWED BUTTON PRESSED <<<")
+	print("    Current mode: ", DisplaySettings.current_mode, " -> Setting to WINDOWED")
 	DisplaySettings.set_display_mode(DisplaySettings.DisplayMode.WINDOWED)
-	print("[PauseMenu] Current mode after: ", DisplaySettings.current_mode)
-	print("Switched to Windowed mode")
+	print("    Mode is now: ", DisplaySettings.current_mode)
+	print("    Window size: ", get_window().size)
+	print()
 
 func _on_fullscreen_pressed() -> void:
-	print("[PauseMenu] _on_fullscreen_pressed called")
-	print("[PauseMenu] Current mode before: ", DisplaySettings.current_mode)
+	print("\n>>> [PauseMenu.BUTTON] FULLSCREEN BUTTON PRESSED <<<")
+	print("    Current mode: ", DisplaySettings.current_mode, " -> Setting to BORDERLESS_FULLSCREEN")
 	DisplaySettings.set_display_mode(DisplaySettings.DisplayMode.BORDERLESS_FULLSCREEN)
-	print("[PauseMenu] Current mode after: ", DisplaySettings.current_mode)
-	print("Switched to Borderless Fullscreen mode")
+	print("    Mode is now: ", DisplaySettings.current_mode)
+	print()
 
 func _on_resolution_pressed(resolution: Vector2i) -> void:
-	print("[PauseMenu] _on_resolution_pressed called with resolution: ", resolution)
-	print("[PauseMenu] Current resolution before: ", DisplaySettings.current_resolution)
+	print("\n>>> [PauseMenu.BUTTON] RESOLUTION BUTTON PRESSED: %s <<<" % resolution)
+	print("    Current resolution: ", DisplaySettings.current_resolution, " -> Setting to ", resolution)
 	DisplaySettings.set_resolution(resolution)
-	print("[PauseMenu] Current resolution after: ", DisplaySettings.current_resolution)
-	print("Switched to resolution: ", resolution)
+	print("    Resolution is now: ", DisplaySettings.current_resolution)
+	print("    Window size: ", get_window().size)
+	print()
 
 func _on_back_from_options_pressed() -> void:
 	is_in_options = false

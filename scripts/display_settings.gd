@@ -39,20 +39,13 @@ func save_settings() -> void:
 	config.save(CONFIG_PATH)
 
 func apply_settings() -> void:
-	var is_editor = Engine.is_editor_hint()
 	print("[DisplaySettings] Applying - mode: %s, resolution: %s" % [current_mode, current_resolution])
-
-	# Check if we can actually resize (not in editor play mode)
-	var can_resize = not is_editor
 
 	match current_mode:
 		DisplayMode.WINDOWED:
 			get_window().mode = Window.MODE_WINDOWED
-			if can_resize:
-				get_window().size = current_resolution
-				print("[DisplaySettings] Window set to %s (size applied)" % current_resolution)
-			else:
-				print("[DisplaySettings] Window mode set to WINDOWED (size deferred until standalone)")
+			get_window().size = current_resolution
+			print("[DisplaySettings] Window set to %s" % current_resolution)
 
 		DisplayMode.BORDERLESS_FULLSCREEN:
 			get_window().mode = Window.MODE_FULLSCREEN
