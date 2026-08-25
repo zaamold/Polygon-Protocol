@@ -87,7 +87,9 @@ func _physics_process(delta: float) -> void:
 
 	frame_count += 1
 	if frame_count % 60 == 0:
-		print("Player at: ", position, " / Arena: ", arena_width, "x", arena_height)
+		var distance_from_bottom = arena_height - position.y
+		var distance_from_right = arena_width - position.x
+		print("Player: ", position, " | Distance from edges - Right: %.1f, Bottom: %.1f" % [distance_from_right, distance_from_bottom])
 
 func get_aim_direction() -> Vector2:
 	var stick_dir = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
