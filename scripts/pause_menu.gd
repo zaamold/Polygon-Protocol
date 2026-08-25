@@ -176,15 +176,64 @@ func _show_options_panel() -> void:
 		margin.add_theme_constant_override("margin_bottom", 20)
 
 		var vbox_options = VBoxContainer.new()
+		vbox_options.add_theme_constant_override("separation", 15)
+
 		var title = Label.new()
-		title.text = "Options (Placeholder)"
+		title.text = "Display Settings"
 		vbox_options.add_child(title)
+
+		vbox_options.add_child(Label.new())  # Spacer
+
+		# Display Mode section
+		var display_mode_label = Label.new()
+		display_mode_label.text = "Display Mode:"
+		vbox_options.add_child(display_mode_label)
+
+		var display_mode_hbox = HBoxContainer.new()
+		display_mode_hbox.add_theme_constant_override("separation", 10)
+
+		var windowed_btn = Button.new()
+		windowed_btn.text = "Windowed"
+		windowed_btn.name = "WindowedButton"
+		windowed_btn.pressed.connect(_on_windowed_pressed)
+		windowed_btn.focus_mode = Control.FOCUS_ALL
+		display_mode_hbox.add_child(windowed_btn)
+
+		var fullscreen_btn = Button.new()
+		fullscreen_btn.text = "Borderless FS"
+		fullscreen_btn.name = "FullscreenButton"
+		fullscreen_btn.pressed.connect(_on_fullscreen_pressed)
+		fullscreen_btn.focus_mode = Control.FOCUS_ALL
+		display_mode_hbox.add_child(fullscreen_btn)
+
+		vbox_options.add_child(display_mode_hbox)
+
+		vbox_options.add_child(Label.new())  # Spacer
+
+		# Resolution section
+		var resolution_label = Label.new()
+		resolution_label.text = "Resolution (Windowed):"
+		resolution_label.name = "ResolutionLabel"
+		vbox_options.add_child(resolution_label)
+
+		var resolution_hbox = HBoxContainer.new()
+		resolution_hbox.add_theme_constant_override("separation", 5)
+		resolution_hbox.name = "ResolutionBox"
+
+		for res in DisplaySettings.get_resolution_presets():
+			var res_btn = Button.new()
+			res_btn.text = "%dx%d" % [res.x, res.y]
+			res_btn.pressed.connect(func(): _on_resolution_pressed(res))
+			res_btn.focus_mode = Control.FOCUS_ALL
+			resolution_hbox.add_child(res_btn)
+
+		vbox_options.add_child(resolution_hbox)
 
 		vbox_options.add_child(Label.new())  # Spacer
 
 		var back_btn = Button.new()
 		back_btn.text = "Back"
-		back_btn.name = "BackButton"  # Named reference to avoid index lookups
+		back_btn.name = "BackButton"
 		back_btn.pressed.connect(_on_back_from_options_pressed)
 		back_btn.focus_mode = Control.FOCUS_ALL
 		vbox_options.add_child(back_btn)
@@ -194,13 +243,38 @@ func _show_options_panel() -> void:
 		vbox.add_child(options_panel)
 
 	options_panel.visible = true
-	var back_btn = options_panel.get_child(0).get_child(0).get_child(2)  # PanelContainer -> MarginContainer -> VBoxContainer -> Back button
-	if back_btn:
-		menu_buttons.clear()
-		menu_buttons.append(back_btn)
-		current_focus_index = 0
-		back_btn.grab_focus.call_deferred()
+	_populate_options_buttons()
 	print("Options menu opened (paused=%s)" % get_tree().paused)
+
+func _populate_options_buttons() -> void:
+	menu_buttons.clear()
+	var margin = options_panel.get_child(0)
+	var vbox = margin.get_child(0)
+
+	# Collect all buttons from the options panel
+	for child in vbox.get_children():
+		if child is Button:
+			menu_buttons.append(child)
+		elif child is HBoxContainer:
+			for btn in child.get_children():
+				if btn is Button:
+					menu_buttons.append(btn)
+
+	if menu_buttons.size() > 0:
+		current_focus_index = 0
+		menu_buttons[0].grab_focus.call_deferred()
+
+func _on_windowed_pressed() -> void:
+	DisplaySettings.set_display_mode(DisplaySettings.DisplayMode.WINDOWED)
+	print("Switched to Windowed mode")
+
+func _on_fullscreen_pressed() -> void:
+	DisplaySettings.set_display_mode(DisplaySettings.DisplayMode.BORDERLESS_FULLSCREEN)
+	print("Switched to Borderless Fullscreen mode")
+
+func _on_resolution_pressed(resolution: Vector2i) -> void:
+	DisplaySettings.set_resolution(resolution)
+	print("Switched to resolution: ", resolution)
 
 func _on_back_from_options_pressed() -> void:
 	is_in_options = false
