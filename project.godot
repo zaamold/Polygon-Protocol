@@ -30,9 +30,6 @@ DisplaySettings="*res://scripts/display_settings.gd"
 
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
-window/min_size/width=576
-window/min_size/height=324
-window/content_scale_aspect_ratio=1.777778
 
 [editor_plugins]
 

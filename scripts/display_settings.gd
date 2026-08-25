@@ -39,29 +39,24 @@ func save_settings() -> void:
 	config.save(CONFIG_PATH)
 
 func apply_settings() -> void:
-	print("[DisplaySettings] Applying settings - mode: %s, resolution: %s" % [current_mode, current_resolution])
+	var is_editor = Engine.is_editor_hint()
+	print("[DisplaySettings] Applying - mode: %s, resolution: %s" % [current_mode, current_resolution])
 
 	# Check if we can actually resize (not in editor play mode)
-	var can_resize = not Engine.is_editor_hint()
+	var can_resize = not is_editor
 
 	match current_mode:
 		DisplayMode.WINDOWED:
-			print("[DisplaySettings] Setting MODE_WINDOWED")
 			get_window().mode = Window.MODE_WINDOWED
-			print("[DisplaySettings] Window mode set to: ", get_window().mode)
-
 			if can_resize:
-				print("[DisplaySettings] Setting size to: ", current_resolution)
 				get_window().size = current_resolution
-				print("[DisplaySettings] Window size is now: ", get_window().size)
+				print("[DisplaySettings] Window set to %s (size applied)" % current_resolution)
 			else:
-				print("[DisplaySettings] In editor mode - window size cannot be changed (will apply when running standalone)")
+				print("[DisplaySettings] Window mode set to WINDOWED (size deferred until standalone)")
 
 		DisplayMode.BORDERLESS_FULLSCREEN:
-			print("[DisplaySettings] Setting MODE_FULLSCREEN")
 			get_window().mode = Window.MODE_FULLSCREEN
-			print("[DisplaySettings] Window mode set to: ", get_window().mode)
-			# Fullscreen uses native resolution automatically
+			print("[DisplaySettings] Window set to BORDERLESS FULLSCREEN")
 
 func set_display_mode(mode: DisplayMode) -> void:
 	current_mode = mode
@@ -74,6 +69,8 @@ func set_resolution(resolution: Vector2i) -> void:
 		if current_mode == DisplayMode.WINDOWED:
 			apply_settings()
 		save_settings()
+	else:
+		print("[DisplaySettings] Resolution %s not in presets, ignoring" % resolution)
 
 func get_resolution_presets() -> Array[Vector2i]:
 	return RESOLUTION_PRESETS.duplicate()
