@@ -21,7 +21,7 @@ func show_game_over() -> void:
 	panel.visible = true
 
 	var time_seconds_int = int(run_manager.time_survived)
-	var time_minutes = time_seconds_int / 60
+	var time_minutes = int(float(time_seconds_int) / 60.0)
 	var time_seconds = time_seconds_int % 60
 
 	var title = Label.new()

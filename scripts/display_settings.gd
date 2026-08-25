@@ -39,12 +39,19 @@ func save_settings() -> void:
 	config.save(CONFIG_PATH)
 
 func apply_settings() -> void:
+	print("[DisplaySettings] Applying settings - mode: %s, resolution: %s" % [current_mode, current_resolution])
 	match current_mode:
 		DisplayMode.WINDOWED:
+			print("[DisplaySettings] Setting MODE_WINDOWED")
 			get_window().mode = Window.MODE_WINDOWED
+			print("[DisplaySettings] Window mode set to: ", get_window().mode)
+			print("[DisplaySettings] Setting size to: ", current_resolution)
 			get_window().size = current_resolution
+			print("[DisplaySettings] Window size is now: ", get_window().size)
 		DisplayMode.BORDERLESS_FULLSCREEN:
+			print("[DisplaySettings] Setting MODE_FULLSCREEN")
 			get_window().mode = Window.MODE_FULLSCREEN
+			print("[DisplaySettings] Window mode set to: ", get_window().mode)
 			# Fullscreen uses native resolution automatically
 
 func set_display_mode(mode: DisplayMode) -> void:

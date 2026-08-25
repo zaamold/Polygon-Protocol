@@ -21,19 +21,16 @@ config/icon="res://icon.svg"
 
 [autoload]
 
+_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 ArenaConfig="*res://scripts/arena_config.gd"
 DisplaySettings="*res://scripts/display_settings.gd"
-_mcp_game_helper="*res://addons/godot_ai/runtime/game_helper.gd"
 
 [display]
 
-window/size/mode=0
-window/size/width=1152
-window/size/height=648
-window/min_size/width=576
-window/min_size/height=324
 window/stretch/mode="canvas_items"
 window/stretch/aspect="expand"
+window/min_size/width=576
+window/min_size/height=324
 window/content_scale_aspect_ratio=1.777778
 
 [editor_plugins]

@@ -35,7 +35,6 @@ func hide_ui() -> void:
 	$Panel.hide()
 	overlay.hide()
 	is_level_up_active = false
-	current_options.clear()
 	selected_index = 0
 
 func _input(event: InputEvent) -> void:

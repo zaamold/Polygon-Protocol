@@ -249,10 +249,10 @@ func _show_options_panel() -> void:
 func _populate_options_buttons() -> void:
 	menu_buttons.clear()
 	var margin = options_panel.get_child(0)
-	var vbox = margin.get_child(0)
+	var options_vbox = margin.get_child(0)
 
 	# Collect all buttons from the options panel
-	for child in vbox.get_children():
+	for child in options_vbox.get_children():
 		if child is Button:
 			menu_buttons.append(child)
 		elif child is HBoxContainer:
@@ -265,15 +265,24 @@ func _populate_options_buttons() -> void:
 		menu_buttons[0].grab_focus.call_deferred()
 
 func _on_windowed_pressed() -> void:
+	print("[PauseMenu] _on_windowed_pressed called")
+	print("[PauseMenu] Current mode before: ", DisplaySettings.current_mode)
 	DisplaySettings.set_display_mode(DisplaySettings.DisplayMode.WINDOWED)
+	print("[PauseMenu] Current mode after: ", DisplaySettings.current_mode)
 	print("Switched to Windowed mode")
 
 func _on_fullscreen_pressed() -> void:
+	print("[PauseMenu] _on_fullscreen_pressed called")
+	print("[PauseMenu] Current mode before: ", DisplaySettings.current_mode)
 	DisplaySettings.set_display_mode(DisplaySettings.DisplayMode.BORDERLESS_FULLSCREEN)
+	print("[PauseMenu] Current mode after: ", DisplaySettings.current_mode)
 	print("Switched to Borderless Fullscreen mode")
 
 func _on_resolution_pressed(resolution: Vector2i) -> void:
+	print("[PauseMenu] _on_resolution_pressed called with resolution: ", resolution)
+	print("[PauseMenu] Current resolution before: ", DisplaySettings.current_resolution)
 	DisplaySettings.set_resolution(resolution)
+	print("[PauseMenu] Current resolution after: ", DisplaySettings.current_resolution)
 	print("Switched to resolution: ", resolution)
 
 func _on_back_from_options_pressed() -> void:
