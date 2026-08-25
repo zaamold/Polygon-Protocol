@@ -58,8 +58,8 @@ func _physics_process(delta: float) -> void:
 	position += velocity * delta
 
 	# Clamp to arena bounds
-	position.x = clamp(position.x, 0, 1024)
-	position.y = clamp(position.y, 0, 600)
+	position.x = clamp(position.x, 0, ArenaConfig.width)
+	position.y = clamp(position.y, 0, ArenaConfig.height)
 
 func take_damage(damage: float) -> void:
 	health -= damage

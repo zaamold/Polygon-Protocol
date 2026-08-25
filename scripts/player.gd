@@ -22,6 +22,15 @@ var overlapping_enemies: Array = []
 
 func _ready() -> void:
 	health = max_health
+
+	# Calculate arena dimensions from viewport to match stretch behavior
+	var viewport_rect = get_viewport().get_visible_rect()
+	arena_width = viewport_rect.size.x
+	arena_height = viewport_rect.size.y
+
+	# Update the global arena config so all objects use the same bounds
+	ArenaConfig.update_bounds(arena_width, arena_height)
+
 	# Spawn at center of arena
 	position = Vector2(arena_width / 2.0, arena_height / 2.0)
 

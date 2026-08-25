@@ -2,8 +2,6 @@ extends Area2D
 
 @export var speed: float = 500.0
 @export var lifetime: float = 5.0
-@export var arena_width: float = 1024.0
-@export var arena_height: float = 600.0
 
 var direction: Vector2 = Vector2.RIGHT
 var elapsed: float = 0.0
@@ -28,7 +26,7 @@ func _physics_process(delta: float) -> void:
 	elapsed += delta
 
 	# Destroy if out of bounds (defensive measure)
-	if position.x < -50 or position.x > arena_width + 50 or position.y < -50 or position.y > arena_height + 50:
+	if position.x < -50 or position.x > ArenaConfig.width + 50 or position.y < -50 or position.y > ArenaConfig.height + 50:
 		_queued_for_deletion = true
 		print("Projectile destroyed (out of bounds) at ", position)
 		queue_free()

@@ -3,8 +3,6 @@ extends Node
 @export var enemy_scene: PackedScene = preload("res://scenes/enemy.tscn")
 @export var enemy_fast_scene: PackedScene = preload("res://scenes/enemy_fast.tscn")
 @export var enemy_ranged_scene: PackedScene = preload("res://scenes/enemy_ranged.tscn")
-@export var arena_width: float = 1024.0
-@export var arena_height: float = 600.0
 @export var spawn_delay: float = 0.8
 @export var wave_delay: float = 3.0
 
@@ -50,13 +48,13 @@ func spawn_enemy() -> void:
 	
 	match edge:
 		0:  # top
-			spawn_pos = Vector2(randf_range(0, arena_width), -offset)
+			spawn_pos = Vector2(randf_range(0, ArenaConfig.width), -offset)
 		1:  # right
-			spawn_pos = Vector2(arena_width + offset, randf_range(0, arena_height))
+			spawn_pos = Vector2(ArenaConfig.width + offset, randf_range(0, ArenaConfig.height))
 		2:  # bottom
-			spawn_pos = Vector2(randf_range(0, arena_width), arena_height + offset)
+			spawn_pos = Vector2(randf_range(0, ArenaConfig.width), ArenaConfig.height + offset)
 		3:  # left
-			spawn_pos = Vector2(-offset, randf_range(0, arena_height))
+			spawn_pos = Vector2(-offset, randf_range(0, ArenaConfig.height))
 	
 	# Randomly choose enemy type (33% each)
 	var enemy_type = randi() % 3
