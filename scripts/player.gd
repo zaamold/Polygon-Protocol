@@ -23,13 +23,13 @@ var overlapping_enemies: Array = []
 func _ready() -> void:
 	health = max_health
 
-	# Calculate arena dimensions from viewport to match stretch behavior
-	var viewport_rect = get_viewport().get_visible_rect()
-	arena_width = viewport_rect.size.x
-	arena_height = viewport_rect.size.y
-
-	# Update the global arena config so all objects use the same bounds
-	ArenaConfig.update_bounds(arena_width, arena_height)
+	# Arena dimensions are now managed by CameraManager (Hor+ aspect ratio approach)
+	# CameraManager updates ArenaConfig to have:
+	# - Fixed height (648)
+	# - Variable width (scales with aspect ratio)
+	# We read from ArenaConfig which is updated by CameraManager
+	arena_width = ArenaConfig.width
+	arena_height = ArenaConfig.height
 
 	# Spawn at center of arena
 	position = Vector2(arena_width / 2.0, arena_height / 2.0)
@@ -86,11 +86,8 @@ func _physics_process(delta: float) -> void:
 		shots_fired += 1
 
 	frame_count += 1
-	if debug_mode && frame_count % 60 == 0:
-		var aim = get_aim_direction()
-		print("Player position: ", position, " | Input: ", input_vector, " | Aim: ", aim, " (length: ", aim.length(), ") | Fire rate: ", fire_rate, " shots/sec")
-		# Auto-fire for testing
-		fire_projectile_in_direction(aim)
+	if frame_count % 60 == 0:
+		print("Player at: ", position, " / Arena: ", arena_width, "x", arena_height)
 
 func get_aim_direction() -> Vector2:
 	var stick_dir = Input.get_vector("aim_left", "aim_right", "aim_up", "aim_down")
